@@ -22,10 +22,9 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input, select, button {
+        input, button {
             width: 100%;
             padding: 8px;
-            margin-top: 2px;
             font-size: 16px;
         }
         button {
@@ -80,6 +79,7 @@
     <script>
         document.getElementById('dataForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const form = e.target;
             const data = {
                 nama: form.nama.value,
@@ -89,21 +89,26 @@
                 pendidikan_terakhir: form.pendidikan_terakhir.value,
                 tmt: form.tmt.value,
                 alamat: form.alamat.value,
-                unit_kerja: form.unit_kerja.value,
+                unit_kerja: form.unit_kerja.value
             };
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbxbY83Cf1o3TpxuePBezVH-3JpPx2cfyrIkwH0qiMY/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbzjOMoPf_UHKqBHrGBFE5EXP77yC2NOINjs2TqR2_UwXEtbjlN4j9X7NzxIgWy7lhqR/exec', {
                     method: 'POST',
                     body: JSON.stringify(data),
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json' }
                 });
+
                 const result = await response.json();
-                alert(result.message);
-                form.reset();
+                if (response.ok) {
+                    alert(result.message);
+                    form.reset();
+                } else {
+                    alert(`Server Error: ${result.message || 'Unknown error'}`);
+                }
             } catch (error) {
                 console.error(error);
-                alert('Terjadi kesalahan saat mengirim data.');
+                alert(`Terjadi kesalahan: ${error.message}`);
             }
         });
     </script>
