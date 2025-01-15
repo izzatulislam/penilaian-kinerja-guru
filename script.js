@@ -12,7 +12,7 @@ document.getElementById('dataForm').addEventListener('submit', async function (e
     };
 
     try {
-        const response = await axios.post('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', formData);
+        const response = await axios.post('https://script.google.com/macros/s/AKfycbyamk-7gpEILfn1SCjBS5QiIIN9pTdWruGb7RFizu_0xPkSOkw6YwYKxTJ7H4jht4lLuw/exec', formData);
         if (response.data.status === 'success') {
             alert('Data berhasil disimpan!');
             document.getElementById('dataForm').reset();
