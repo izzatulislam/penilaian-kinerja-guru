@@ -1,18 +1,26 @@
-document.getElementById('assessmentForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById('dataForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-    const teacherName = document.getElementById('teacherName').value;
-    const subject = document.getElementById('subject').value;
-    const score = document.getElementById('score').value;
+    const formData = {
+        nama: document.getElementById('nama').value,
+        nik: document.getElementById('nik').value,
+        ttl: document.getElementById('ttl').value,
+        pendidikan: document.getElementById('pendidikan').value,
+        tmt: document.getElementById('tmt').value,
+        alamat: document.getElementById('alamat').value,
+        unitKerja: document.getElementById('unitKerja').value
+    };
 
-    const table = document.getElementById('resultsTable').querySelector('tbody');
-    const row = table.insertRow();
-
-    row.innerHTML = `
-        <td>${teacherName}</td>
-        <td>${subject}</td>
-        <td>${score}</td>
-    `;
-
-    this.reset();
+    try {
+        const response = await axios.post('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', formData);
+        if (response.data.status === 'success') {
+            alert('Data berhasil disimpan!');
+            document.getElementById('dataForm').reset();
+        } else {
+            alert('Terjadi kesalahan: ' + response.data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Gagal mengirim data. Silakan coba lagi.');
+    }
 });
