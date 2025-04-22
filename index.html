@@ -1,74 +1,77 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Form Input</title>
+  <title>INPUT DATA KE SPREAD SHEET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; }
-    input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-    button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #45a049; }
+    /*  */
+    body {
+      background-color: #0c0a0a;
+    }
+    #form-container {
+      width: 500px;
+      margin: 0 auto;
+      background-color: #f1f1f7;
+      border: 2px solid #da0808;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    #form-container h2 {
+      text-align: center;
+      color: #1E90FF;
+    }
+    #form-container input[type="text"], #form-container input[type="date"], #form-container input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #f1d0d0;
+      border-radius: 5px;
+    }
+    #form-container input[type="submit"] {
+      background-color: #1E90FF;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    #form-container input[type="submit"]:hover {
+      background-color: #004B8D;
+    }
+    #footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #f7f1f1;
+    }
   </style>
 </head>
-<body>
-  <h2>Form Kontak</h2>
-  <form id="myForm">
-    <div class="form-group">
-      <label>Nama:</label>
-      <input type="text" name="nama" required>
-    </div>
-    
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="email" name="email" required>
-    </div>
-    
-    <div class="form-group">
-      <label>Pesan:</label>
-      <textarea name="pesan" rows="4" required></textarea>
-    </div>
-    
-    <button type="submit">Kirim</button>
-  </form>
-  
-  <div id="message"></div>
 
-  <script>
-  document.getElementById('myForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = {
-      nama: document.querySelector('[name="nama"]').value,
-      email: document.querySelector('[name="email"]').value,
-      pesan: document.querySelector('[name="pesan"]').value
-    };
-    
-    const url = 'https://script.google.com/macros/s/AKfycbxJwtzi9-psfFDzZJHee6-20ZnUIQhkR6RBMFgackpf97D7aqLi6kUKfT93COB4mqBJNA/exec';
-    
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      const messageDiv = document.getElementById('message');
-      messageDiv.innerHTML = data.status === "success" 
-        ? "✔ " + data.message 
-        : "❌ " + data.message;
-      messageDiv.style.color = data.status === "success" ? "green" : "red";
-      
-      if(data.status === "success") {
-        document.getElementById('myForm').reset();
-      }
-    })
-    .catch(error => {
-      document.getElementById('message').innerHTML = "❌ Error: " + error;
-    });
-  });
-</script>
+<body>
+  <div id="form-container">
+    <h2>INPUT DATA KE SPREAD SHEET</h2>
+    <!-- akses link script app -->
+    <form action="https://script.google.com/macros/s/AKfycbydo3lyXapuLqPhey-PykkCd58fFXl5ewosD87BdH23G8G6lB3IRgzxEI-t0jtwWf0U/exec" method="post">
+    <!-- end akses  -->
+
+        <label for="nama">Nama:</label>
+      <input type="text" id="nama" name="nama" required>
+      <label for="ktp">Nomor KTP:</label>
+      <input type="text" id="ktp" name="ktp" required>
+      <label for="tgl_lahir">Tanggal Lahir:</label>
+      <input type="date" id="tgl_lahir" name="tgl_lahir" required>
+      <label for="alamat">Alamat:</label>
+      <input type="text" id="alamat" name="alamat" required>
+      <label for="no_hp">Nomor HP:</label>
+      <input type="tel" id="no_hp" name="no_hp" pattern="[0-9]{10,12}" required>
+      <input type="submit" value="Simpan Data">
+    </form>
+  </div>
+
+  <div id="footer">
+    All Tutorial for you, jagan lupa subcribe karna akan selalu ada update
+  </div>
+
 </body>
 </html>
