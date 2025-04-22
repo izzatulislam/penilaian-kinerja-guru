@@ -1,116 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Pegawai</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        form > div {
-            margin-bottom: 10px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, button {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <title>Form Input</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; }
+    input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+    button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #45a049; }
+  </style>
 </head>
 <body>
-    <h2>Input Data Pegawai</h2>
-    <form id="dataForm">
-        <div>
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama" required>
-        </div>
-        <div>
-            <label for="nik">NIK:</label>
-            <input type="text" id="nik" name="nik" required>
-        </div>
-        <div>
-            <label for="tempat_lahir">Tempat Lahir:</label>
-            <input type="text" id="tempat_lahir" name="tempat_lahir" required>
-        </div>
-        <div>
-            <label for="tanggal_lahir">Tanggal Lahir:</label>
-            <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
-        </div>
-        <div>
-            <label for="pendidikan_terakhir">Pendidikan Terakhir:</label>
-            <input type="text" id="pendidikan_terakhir" name="pendidikan_terakhir" required>
-        </div>
-        <div>
-            <label for="tmt">TMT:</label>
-            <input type="date" id="tmt" name="tmt" required>
-        </div>
-        <div>
-            <label for="alamat">Alamat:</label>
-            <input type="text" id="alamat" name="alamat" required>
-        </div>
-        <div>
-            <label for="unit_kerja">Unit Kerja:</label>
-            <input type="text" id="unit_kerja" name="unit_kerja" required>
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+  <h2>Form Kontak</h2>
+  <form id="myForm">
+    <div class="form-group">
+      <label>Nama:</label>
+      <input type="text" name="nama" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Pesan:</label>
+      <textarea name="pesan" rows="4" required></textarea>
+    </div>
+    
+    <button type="submit">Kirim</button>
+  </form>
+  
+  <div id="message"></div>
 
-    <script>
-        document.getElementById('dataForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const form = e.target;
-            const data = {
-                nama: form.nama.value,
-                nik: form.nik.value,
-                tempat_lahir: form.tempat_lahir.value,
-                tanggal_lahir: form.tanggal_lahir.value,
-                pendidikan_terakhir: form.pendidikan_terakhir.value,
-                tmt: form.tmt.value,
-                alamat: form.alamat.value,
-                unit_kerja: form.unit_kerja.value
-            };
-
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbzjOMoPf_UHKqBHrGBFE5EXP77yC2NOINjs2TqR2_UwXEtbjlN4j9X7NzxIgWy7lhqR/exec', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                const result = await response.json();
-                if (response.ok) {
-                    alert(result.message);
-                    form.reset();
-                } else {
-                    alert(`Server Error: ${result.message || 'Unknown error'}`);
-                }
-            } catch (error) {
-                console.error(error);
-                alert(`Terjadi kesalahan: ${error.message}`);
-            }
-        });
-    </script>
+  <script>
+  document.getElementById('myForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+      nama: document.querySelector('[name="nama"]').value,
+      email: document.querySelector('[name="email"]').value,
+      pesan: document.querySelector('[name="pesan"]').value
+    };
+    
+    const url = 'URL_APPS_SCRIPT_ANDA';
+    
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      const messageDiv = document.getElementById('message');
+      messageDiv.innerHTML = data.status === "success" 
+        ? "✔ " + data.message 
+        : "❌ " + data.message;
+      messageDiv.style.color = data.status === "success" ? "green" : "red";
+      
+      if(data.status === "success") {
+        document.getElementById('myForm').reset();
+      }
+    })
+    .catch(error => {
+      document.getElementById('message').innerHTML = "❌ Error: " + error;
+    });
+  });
+</script>
 </body>
 </html>
