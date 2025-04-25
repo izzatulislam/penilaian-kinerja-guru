@@ -67,21 +67,36 @@
   </form>
 </div>
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzKDCZ9PhfM5DzhjOpTtNAZhPJbXtWlhSi64AQ2JpMUCq33EiWDjGicAAktgdCAkk9q/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzKDCZ9PhfM5DzhjOpTtNAZhPJbXtWlhSi64AQ2JpMUCq33EiWDjGicAAktgdCAkk9q/exec'; // Ganti dengan URL Google Apps Script kamu
   const form = document.getElementById("registrasiForm");
   const alertBox = document.getElementById("form_alerts");
+  const submitBtn = document.getElementById("submitBtn");
 
   form.addEventListener("submit", e => {
     e.preventDefault();
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-      .then(() => {
-        alertBox.innerHTML = "<div class='alert alert-success'>Data berhasil dikirim.</div>";
-        form.reset();
-        setTimeout(() => alertBox.innerHTML = '', 4000);
-      })
-      .catch(() => {
-        alertBox.innerHTML = "<div class='alert alert-danger'>Terjadi kesalahan. Coba lagi.</div>";
-      });
+
+    // Tampilkan loading
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Mengirim...";
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(() => {
+      alertBox.innerHTML = "<div class='alert alert-success'>Data berhasil dikirim.</div>";
+      form.reset();
+      setTimeout(() => alertBox.innerHTML = '', 4000);
+    })
+    .catch(() => {
+      alertBox.innerHTML = "<div class='alert alert-danger'>Terjadi kesalahan. Silakan coba lagi.</div>";
+      setTimeout(() => alertBox.innerHTML = '', 4000);
+    })
+    .finally(() => {
+      // Reset tombol
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Kirim";
+    });
   });
 </script>
 </body>
