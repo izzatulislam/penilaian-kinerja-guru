@@ -1,77 +1,159 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title> REGISTRASI </title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrasi CRUD</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      padding: 30px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    .form-section, .table-section {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
 <body>
-  <div class="container">
-    <div class="title"style="text-align: center;">FORM REGISTRASI</div>
-    <div class="content">
-     <form name="#">
-        <div id="form_alerts"></div>
-        <div class="user-details">
-          <div class="input-box">
-             <label for="NAMA_LENGKAP" class="form-label">Nama Lengkap</label>
-              <input type="text" id="NAMA_LENGKAP" name="NAMA_LENGKAP" class="form-control" placeholder="Masukan nama lengkap" required>
-          </div>
-          <div class="input-box">
-            <label for="JENIS_KELAMIN" class="form-label">Jenis Kelamin</label>
-              <select type="text" id="JENIS_KELAMIN" name="JENIS_KELAMIN" class="form-control" placeholder="Pilih jenis kelamin " required>
-                <option>--Pilih jenis kelamin--</option>
-                <option>Laki-laki</option>
-                <option>Perempuan</option>
-              </select>
-          </div>
-           <div class="input-box">
-           <label for="TEMPAT_LAHIR" class="form-label">Tempat Lahir</label>
-              <input type="text" id="TEMPAT_LAHIR" name="TEMPAT_LAHIR" class="form-control" placeholder="Masukan tempat lahir " required>
-          </div>
-           <div class="input-box">
-           <label for="TANGGAL_LAHIR" class="form-label">Tanggal Lahir</label>
-              <input type="date" id="TANGGAL_LAHIR" name="TANGGAL_LAHIR" class="form-control" placeholder="Masukan tanggal lahir " required>
-          </div>
-          <div class="input-box">
-           <label for="ALAMAT" class="form-label">Alamat</label>
-              <input type="text" id="ALAMAT" name="ALAMAT" class="form-control" placeholder="Masukan alamat " required>
-          </div>
-          <div class="input-box">
-            <label for="EMAIL" class="form-label">Email</label>
-              <input type="email" id="EMAIL" name="EMAIL" class="form-control" placeholder="Masukan email " required>
-          </div>
-          <div class="input-box">
-            <label for="KONTAK" class="form-label">Nomor Kontak</label>
-              <input type="number" id="KONTAK" name="KONTAK" class="form-control" placeholder="Masukan nomor telepon" required>
-          </div>
-          <div class="input-box">
-          <label for="KETERANGAN" class="form-label">KETERANGAN</label>
-              <input type="text" id="KETERANGAN" name="KETERANGAN" class="form-control" placeholder="Masukan keterangan" required>
-          </div>
+<div class="container">
+  <div class="form-section">
+    <h2>Form Registrasi</h2>
+    <div id="form_alerts"></div>
+    <form id="registrasiForm">
+      <input type="hidden" name="rowIndex" id="rowIndex">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>Nama Lengkap</label>
+          <input type="text" class="form-control" name="NAMA_LENGKAP" required>
         </div>
-        <div class="button">
-          <input type="submit" value="Kirim Registrasi">
+        <div class="col-md-6 mb-3">
+          <label>Jenis Kelamin</label>
+          <select class="form-control" name="JENIS_KELAMIN" required>
+            <option value="">-- Pilih --</option>
+            <option>Laki-laki</option>
+            <option>Perempuan</option>
+          </select>
         </div>
-      </form>
-    </div>
+        <div class="col-md-6 mb-3">
+          <label>Tempat Lahir</label>
+          <input type="text" class="form-control" name="TEMPAT_LAHIR" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Tanggal Lahir</label>
+          <input type="date" class="form-control" name="TANGGAL_LAHIR" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Alamat</label>
+          <input type="text" class="form-control" name="ALAMAT" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Email</label>
+          <input type="email" class="form-control" name="EMAIL" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Nomor Kontak</label>
+          <input type="text" class="form-control" name="KONTAK" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Keterangan</label>
+          <input type="text" class="form-control" name="KETERANGAN" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzKDCZ9PhfM5DzhjOpTtNAZhPJbXtWlhSi64AQ2JpMUCq33EiWDjGicAAktgdCAkk9q/exec'
-        const form = document.forms['#']
-        
-        form.addEventListener('submit', e => {
-            e.preventDefault()
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => $("#form_alerts").html("<div class='alert alert-success'>Data berhasil dikirim.</div>"))
-            .catch(error => $("#form_alerts").html("<div class='alert alert-danger'>Data gagal terkirim!.</div>"))
-            form.reset();
-        })
-    </script>
+  <div class="table-section">
+    <h3>Data Pendaftar</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>JK</th>
+          <th>Email</th>
+          <th>Kontak</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+  </div>
+</div>
 
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzKDCZ9PhfM5DzhjOpTtNAZhPJbXtWlhSi64AQ2JpMUCq33EiWDjGicAAktgdCAkk9q/exec';
+const form = document.getElementById('registrasiForm');
+const alerts = document.getElementById('form_alerts');
+
+function loadData() {
+  fetch(scriptURL)
+    .then(res => res.json())
+    .then(data => {
+      const body = document.getElementById('dataBody');
+      body.innerHTML = '';
+      data.forEach(row => {
+        body.innerHTML += `
+          <tr>
+            <td>${row.NAMA_LENGKAP}</td>
+            <td>${row.JENIS_KELAMIN}</td>
+            <td>${row.EMAIL}</td>
+            <td>${row.KONTAK}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" onclick='editData(${JSON.stringify(row)})'>Edit</button>
+              <button class="btn btn-danger btn-sm" onclick='deleteData(${row.rowIndex})'>Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+    });
+}
+
+function editData(data) {
+  for (const key in data) {
+    if (form[key]) form[key].value = data[key];
+  }
+  document.getElementById('rowIndex').value = data.rowIndex;
+}
+
+function deleteData(rowIndex) {
+  if (!confirm('Yakin hapus data ini?')) return;
+  const formData = new URLSearchParams();
+  formData.append('action', 'delete');
+  formData.append('rowIndex', rowIndex);
+  fetch(scriptURL, { method: 'POST', body: formData }).then(() => {
+    loadData();
+    showAlert('Data berhasil dihapus.', 'danger');
+  });
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = new FormData(form);
+  const isUpdate = form.rowIndex.value;
+  if (isUpdate) {
+    data.append('action', 'update');
+    data.append('rowIndex', form.rowIndex.value);
+  }
+  fetch(scriptURL, { method: 'POST', body: data }).then(() => {
+    loadData();
+    showAlert('Data berhasil disimpan.', 'success');
+    form.reset();
+    form.rowIndex.value = '';
+  });
+});
+
+function showAlert(msg, type) {
+  alerts.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+  setTimeout(() => alerts.innerHTML = '', 4000);
+}
+
+loadData();
+</script>
 </body>
 </html>
