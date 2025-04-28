@@ -40,19 +40,34 @@
     </form>
   </div>
   <script>
-    const loginForm = document.getElementById("loginForm");
-    const alertBox = document.getElementById("login_alert");
-    loginForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      if (user === "admin" && pass === "admin123") {
-        localStorage.setItem("isAdmin", "true");
-        window.location.href = "cari.html";
-      } else {
-        alertBox.innerHTML = `<div class="alert alert-danger">Login gagal. Username atau password salah.</div>`;
-      }
-    });
-  </script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzKDCZ9PhfM5DzhjOpTtNAZhPJbXtWlhSi64AQ2JpMUCq33EiWDjGicAAktgdCAkk9q/exec';
+  const loginForm = document.getElementById("loginForm");
+  const alertBox = document.getElementById("login_alert");
+
+  loginForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const data = new URLSearchParams();
+    data.append("action", "login");
+    data.append("username", username);
+    data.append("password", password);
+
+    fetch(scriptURL, { method: "POST", body: data })
+      .then(res => res.json())
+      .then(result => {
+        if (result.status === "success") {
+          localStorage.setItem("isAdmin", "true");
+          window.location.href = "cari.html";
+        } else {
+          alertBox.innerHTML = `<div class="alert alert-danger">Login gagal. Username atau password salah.</div>`;
+        }
+      })
+      .catch(() => {
+        alertBox.innerHTML = `<div class="alert alert-danger">Terjadi kesalahan koneksi.</div>`;
+      });
+  });
+</script>
 </body>
 </html>
